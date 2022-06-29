@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "inquirer": "^9.0.0",
+    "jest": "^28.1.1"
+  },
+  "name": "team_profile_generator_repository",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaloksikand/Team_Profile_Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aaloksikand/Team_Profile_Generator/issues"
+  },
+  "homepage": "https://github.com/aaloksikand/Team_Profile_Generator#readme"
+}
