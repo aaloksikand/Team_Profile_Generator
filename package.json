@@ -11,7 +11,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "jest --verbose test/*"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",

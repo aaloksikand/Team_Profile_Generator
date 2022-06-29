@@ -31,46 +31,19 @@ inquirer  //using the inqurer prompt
     },
     {
       type: 'input', //user input for Description
-      message: 'Please enter a short description of your project.',  //See Acceptance Criteria: "// WHEN I enter a description . . ."
-      name: 'description',
+      message: 'Please enter the manager employee ID.',  //See Acceptance Criteria: "// WHEN I enter a description . . ."
+      name: 'managerId',
     },
     {
       type: 'input',  //user input for Installation Instructions
       message: 'Please enter your project installation instructions here.',
-      name: 'installationInstructions', //See Acceptance Criteria: ". . . WHEN I enter installation instructions . . .""
+      name: 'emailAddress', //See Acceptance Criteria: ". . . WHEN I enter installation instructions . . .""
       },
     {
       type: 'input',  //user input for project usage
       message: 'Please enter your project usage information here.',
-      name: 'usageInformation',  // WHEN I enter . . . usage information . . .""
+      name: 'officeNumber',  // WHEN I enter . . . usage information . . .""
       },
-    {
-      type: 'input',  //user input for contribution guidelines
-      message: 'Please enter your project contribution guidelines here.',  // WHEN I enter . . . contribution guidelines 
-      name: 'contributionGuidelines', // WHEN I enter . . .contribution guidelines . . .
-      },
-    {
-      type: 'input',  //user input for project test instructions
-      message: 'Please enter your project test instructions here.',
-      name: 'testInstructions',  // WHEN I enter . . . test instructions
-      },
-    {
-      type: 'checkbox',  //checkbox input for different license choices
-      message: 'Please choose a license for your application from the following list of options.',  // WHEN I choose a license for my application from a list of options
-      name: 'licenseChoice',
-      choices: ['Apache', 'The MIT License', 'Mozilla'],
-    },
-    {
-      type: 'input',  //github username
-      message: 'Please enter your Github username.',
-      name: 'githubUrl',
-      
-    },  
-    {
-      type: 'input',  //email address
-      message: 'Please enter your email address.',
-      name: 'emailAddress',
-    }
   ])
 
 .then((data) => {
