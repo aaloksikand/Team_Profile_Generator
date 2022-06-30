@@ -1,13 +1,12 @@
-const Employee = require('./Employee');
-const Manager = require('./Manager');
-const Engineer = require('./Engineer');
-const Intern = require('./Intern');
+const Employee = require('../lib/Employee');
+const Manager = require('../lib/Manager');
+const Engineer = require('../lib/Engineer');
+const Intern = require('../lib/Intern');
 
-const buildTeam = team => {
+const makeTeam = team => {
 
     const generateManagerCard = manager => {
-        return
-        <div class="card text-center">
+        return `<div class="card text-center">
     <div class="card-header">
       Team Manager
     </div>
@@ -17,9 +16,9 @@ const buildTeam = team => {
       <a href="mailto:${manager.email}" class="btn btn-primary">Send Email</a>
     </div>
     <div class="card-footer text-muted">
-      ${manager.id}
+      Employee ID${manager.id}
     </div>
-  </div>
+  </div>`
     }
 
     const html = [];
@@ -29,8 +28,7 @@ const buildTeam = team => {
     )
 
     const generateEngineerCard = engineer => {
-        return
-        <div class="row">
+        return `<div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-header">
@@ -42,20 +40,19 @@ const buildTeam = team => {
         <a href="https://www.github.com/${engineer.github}" class="btn btn-primary">My Github</a>
       </div>
       <div class="card-footer text-muted">
-      ${engineer.id}
+      Employee ID${engineer.id}
     </div>
     </div>
   </div>
-    </div>
+    </div>`
     }
 
     html.push(team.filter(employee => employee.getRole() === "Engineer")
-    .map(manager => generateEngineerCard(engineer))
+    .map(engineer => generateEngineerCard(engineer))
     )
 
     const generateInternCard = intern => {
-        return
-        <div class="row">
+        return `<div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-header">
@@ -67,15 +64,15 @@ const buildTeam = team => {
         <a href="mailto:${intern.email}" class="btn btn-primary">Email Me</a>
       </div>
       <div class="card-footer text-muted">
-      ${intern.id}
+      Employee ID${intern.id}
     </div>
     </div>
   </div>
-    </div>
+    </div>`
     }
 
-    html.push(team.filter(employee => employee.getRole() === "intern")
-    .map(manager => generateinternCard(engineer))
+    html.push(team.filter(employee => employee.getRole() === "Intern")
+    .map(intern => generateInternCard(intern))
     )
 
     return html.join("") 
