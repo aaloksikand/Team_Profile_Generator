@@ -19,25 +19,27 @@
 import inquirer from 'inquirer'; //Importing inquirer according to updated version of inquirer requirements
 
 import fs from 'fs'; //Importing fs
+import CheckboxPrompt from 'inquirer/lib/prompts/checkbox';
+const renderTeam = require("./src/bootstrap")
 
-function managerPrompt() // WHEN I start the application
+function init() // WHEN I start the application
 {
 inquirer  //using the inqurer prompt
   .prompt([
     {  // THEN I am prompted to enter the team manager’s name . . .
       type: 'input',  
       message: 'Please enter the team manager name.',
-      name: 'managerName',  
+      name: 'name',  
     },
     {
       type: 'input', //user input for Description
       message: 'Please enter the manager employee ID.',  //See Acceptance Criteria: "// WHEN I enter a description . . ."
-      name: 'managerId',
+      name: 'id',
     },
     {
       type: 'input',  //user input for Installation Instructions
       message: 'Please enter your project installation instructions here.',
-      name: 'emailAddress', //See Acceptance Criteria: ". . . WHEN I enter installation instructions . . .""
+      name: 'email', //See Acceptance Criteria: ". . . WHEN I enter installation instructions . . .""
       },
     {
       type: 'input',  //user input for project usage
@@ -46,61 +48,127 @@ inquirer  //using the inqurer prompt
       },
   ])
 
-.then((data) => {
-  const filename = `${data.projectTitle.toLowerCase().split('').join('')}.md`; //Generates readme.md file using project title as a name
-  const readMe = generateReadme(data);
-  fs.writeFileSync(filename, readMe, (err) =>
-err ? console.log(err) : console.log('Success!')
+.then((answers) => {
+    const manager = new Manager (
+      answers.id,
+      answers.name,
+      answers.email,
+      answers.officeNumber
+    )
+    teamMemberObjArr.push(manager)
+    addEmployees()
+})
+};
+
+function addEmployees() {
+  inquirer
+.prompt([
+  {
+    type: 'checkbox',  //checkbox input for different employee choices
+    message: 'Please begin to add Employees to your team until you are done.',
+    name: 'employeeChoice',
+    choices: ['Add An Engineer', 'Add An Intern', 'Team Complete'],
+  }
+])
+.then((answers) => {
+  switch (answers.employeeChoice) {
+    case "Add An Engineer":
+    createEngineer();
+    break;
+
+    case "Add An Intern":
+    createIntern();
+    break;
+
+    default:
+      buildTeam();
+      break;
+  }
+})
+function createEngineer() {
+
+  inquirer  //using the inqurer prompt
+  .prompt([
+    {  // THEN I am prompted to enter the engineer’s name . . .
+      type: 'input',  
+      message: 'Please enter the team Engineer name.',
+      name: 'name',  
+    },
+    {
+      type: 'input', 
+      message: 'Please enter the Engineer employee ID.',  
+      name: 'id',
+    },
+    {
+      type: 'input',  
+      message: 'Please enter the engineer email address.',
+      name: 'email', 
+      },
+    {
+      type: 'input',  
+      message: 'Please finish the engineer github URL: www.github.com/',
+      name: 'github',  
+      },
+  ])
+
+.then((answers) => {
+    const Engineer = new Engineer (
+      answers.id,
+      answers.name,
+      answers.email,
+      answers.github
+    )
+    teamMemberObjArr.push(Engineer)
+    addEmployees()
+
+})
+
+
+function createIntern() {
+
+  inquirer  //using the inqurer prompt
+  .prompt([
+    {  // THEN I am prompted to enter the team manager’s name . . .
+      type: 'input',  
+      message: 'Please enter the team Intern name.',
+      name: 'name',  
+    },
+    {
+      type: 'input', //user input for Description
+      message: 'Please enter the Intern employee ID.',  //See Acceptance Criteria: "// WHEN I enter a description . . ."
+      name: 'id',
+    },
+    {
+      type: 'input',  //user input for Installation Instructions
+      message: 'Please enter the Intern email address.',
+      name: 'email', //See Acceptance Criteria: ". . . WHEN I enter installation instructions . . .""
+      },
+    {
+      type: 'input',  //user input for project usage
+      message: 'Please enter Intern school of attendance.',
+      name: 'github',  // WHEN I enter . . . usage information . . .""
+      },
+  ])
+
+.then((answers) => {
+    const Intern = new Intern (
+      answers.id,
+      answers.name,
+      answers.email,
+      answers.school
+    )
+    teamMemberObjArr.push(Intern)
+    addEmployees()
+
+})
+}
+ function buildTeam() {
+  fs.writeFile("./dist/index.html", renderTeam(teamMemberObjArr), "utf-8")
+ }
 )
 })
 }
 
-function displayBadge(licenseChoice){  //displaybadge function depending on user choice of Apache, MIT or Mozilla
-  let licenseBadge;
-  if (licenseChoice = 'Apache') {
-    licenseBadge = '[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)]' //paste Apache here
-  }
-  else if (licenseChoice = 'The MIT License') {
-    licenseBadge = '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)]' //paste MIT here
-  }
-  else if (licenseChoice = 'Mozilla') {
-    licenseBadge = '[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)]' //paste Mozilla here
-  }
-  return licenseBadge;
-}
-function generateReadme(data)
-{
- return `# ${data.projectTitle} ${displayBadge(data.licenseChoice)}
 
-## Project Description
-${data.description}
-
-## Table of Contents
-
-* [Installation](#installation)
-* [Usage](#usage)
-* [License](#license)
-* [Contributing](#contributing)
-* [Tests](#tests)
-* [Questions](#questions)
-
-## Installation
-${data.installationInstructions}
-
-## Usage
-${data.usageInformation}
-
-## License
-${data.licenseChoice} 
-
-## Contributing
-${data.contributionGuidelines}
-
-## Tests
-${data.testInstructions}
-
-## Questions
-For additional questions, please contact https://www.github.com/${data.githubUrl} or ${data.emailAddress}.  Thank you.`;
-}
 
 init();
